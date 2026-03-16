@@ -1,0 +1,22 @@
+#!/bin/bash
+## NECESSARY JOB SPECIFICATIONS
+#SBATCH --job-name=my_gpu_job        # Job name
+#SBATCH --time=02:00:00              # Wall time (hh:mm:ss)
+#SBATCH --ntasks=1                   # Number of tasks (CPU processes)
+#SBATCH --mem=8G                     # Memory per node
+#SBATCH --output=my_gpu_job.%j       # Standard output and error log
+#SBATCH --partition=gpu              # Use the GPU queue
+#SBATCH --gres=gpu:1                 # Request 1 GPU on the node
+
+## OPTIONAL JOB SPECIFICATIONS
+##SBATCH --account=YOUR_ACCOUNT      # Allocation to charge
+##SBATCH --mail-type=ALL             # Email on job begin/end/fail
+##SBATCH --mail-user=NETID@tamu.edu  # Your email
+
+module load intel/2023a CUDA/12.2
+
+./cholesky_parallel_gpu.exe 128
+./cholesky_parallel_gpu.exe 256
+./cholesky_parallel_gpu.exe 512
+./cholesky_parallel_gpu.exe 1024
+./cholesky_parallel_gpu.exe 2048
